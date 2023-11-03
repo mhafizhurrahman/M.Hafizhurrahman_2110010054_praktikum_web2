@@ -11,9 +11,8 @@ class Login extends CI_Controller
     {
         $this->form_validation->set_rules('email', 'email', 'required|trim');
         $this->form_validation->set_rules('password', 'Password', 'required|trim');
-
         if ($this->form_validation->run() == false) {
-            $this->load->view('login/index');
+            $this->load->view('views/login/index');
         } else {
             $this->dologin();
         }
@@ -24,6 +23,7 @@ class Login extends CI_Controller
         $pswd = $this->input->post('password');
         // cari user berdasarkan email
         $user = $this->db->get_where('tb_user', ['email' => $user])->row_array();
+
         // jika user terdaftar
         if ($user) {
             // periksa password-nya
@@ -46,7 +46,7 @@ class Login extends CI_Controller
                 }
             } else {
                 //jika password salah
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> <b>Error :</b> Password Salah. </div>');
+                $this->session->set_flashdata('message', '<div class="alert alertdanger" role="alert"> <b>Error :</b> Password Salah. </div>');
                 redirect('/');
             }
         } else {
@@ -73,6 +73,6 @@ class Login extends CI_Controller
             'user' => infoLogin(),
             'title' => 'Access Denied!'
         );
-        $this->load->view('login/error404', $data);
+        $this->load->view('views/login/error404', $data);
     }
 }

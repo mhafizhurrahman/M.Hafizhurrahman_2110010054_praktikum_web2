@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class User extends CI_Controller
 {
     public function __construct()
@@ -16,16 +15,15 @@ class User extends CI_Controller
             'user' => $this->User_model->getAll(),
             'content' => 'admin/user/index'
         );
-        $this->load->view('application\views\template\main.php', $data);
+        $this->load->view('admin/template/main', $data);
     }
-
     public function add()
     {
         $data = array(
             'title' => 'Tambah Data User',
             'content' => 'admin/user/add_form'
         );
-        $this->load->view('application\views\template\main.php', $data);
+        $this->load->view('admin/template/main', $data);
     }
     public function save()
     {
@@ -33,7 +31,6 @@ class User extends CI_Controller
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata("success", "Data user Berhasil DiSimpan");
         }
-
         redirect('admin/user');
     }
     public function getedit($id)
@@ -43,7 +40,7 @@ class User extends CI_Controller
             'user' => $this->User_model->getById($id),
             'content' => 'admin/user/edit_form'
         );
-        $this->load->view('application\views\template\main.php', $data);
+        $this->load->view('admin/template/main', $data);
     }
 
     public function edit()

@@ -9,13 +9,11 @@
             <div class="card-header">
                 <a href="<?php echo site_url('admin/user/add') ?>"><i class="fasfa-plus"></i> Add New</a>
             </div>
-
             <?php if ($this->session->flashdata('success')) : ?>
                 <div class="alert alert-success" role="alert">
                     <?php echo $this->session->flashdata('success'); ?>
                 </div>
             <?php endif; ?>
-
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered tablehover" id="tabelkelas" width="100%" cellspacing="0">
@@ -35,21 +33,20 @@
                             $no = 1;
                             foreach ($user as $user) {
                                 echo "<tr>
-                <td>$no</td>
-                <td>$user->username</td>
-                <td>$user->email</td>
-                <td>$user->phone</td> 
+            <td>$no</td>
+            <td>$user->username</td>
+            <td>$user->email</td>
+            <td>$user->phone</td> 
  
-                <td>$user->role</td> 
+            <td>$user->role</td> 
  
-                <td>
-                    <div>
+            <td>
+                <div>
                     <a href=" . base_url('admin/user/getedit/' . $user->id) . " class='btn btn-sm btn-info'><i class='fas fa-edit'></i> Edit</a>
-                    <a href=" . base_url('admin/user/delete/' . $user->id) . " class='btn btn-sm btn-danger'
-                        onclick='return confirm(\"Ingin mengapus data user ini?\");'><i class='fas fa-trash'></i> Hapus</a>
-                    </div>
-                </td>
-            </tr>";
+                    <a href=" . base_url('admin/user/delete/' . $user->id) . " class='btn btn-sm btn-danger'onclick='return confirm(\"Ingin mengapus data user ini?\");'><i class='fas fa-trash'></i> Hapus</a>
+                </div>
+            </td>
+                                    </tr>";
                                 $no++;
                             } ?>
                         </tbody>
