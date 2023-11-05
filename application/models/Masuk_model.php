@@ -1,18 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 class Masuk_model extends CI_Model
 {
-   
+
+
     protected $_table = 'tb_surat_masuk';
     protected $primary = 'id';
     public function getAll()
     {
-        return $this->db->where('is_active', 1)->get($this->_table)->result();
+        return $this->db->where('is_active',1)->get($this->_table)->result();
     }
-
-
-
-
-
 
     public function save()
     {
@@ -27,24 +23,32 @@ class Masuk_model extends CI_Model
             'image' => $this->uploadImage(),
             'is_active' => '1',
         ];
-        $this->db->insert($this->_table, $data);
+
+if ($this->db->insert($this->_table, $data)) {
+    // Berhasil
+} else {
+    // Gagal
+    echo $this->db->error(); // Menampilkan pesan kesalahan
+}
+
     }
     public function uploadImage()
-    {
-        $config['upload_path'] = './assets/photo/surat_masuk/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['file_name'] = $this->input->post('no_surat');
-        $config['overwrite'] = true;
-        $config['max_size'] = 1024;
-        // $config['max_width'] = 1024;
-        // $config['max_height'] = 768;
-        // $config['encrypt_name'] = TRUE;
-        $this->load->library('upload', $config);
-        if ($this->upload->do_upload('image')) {
-            return $this->upload->data("file_name");
-        }
-        return "no_image.jpg";
+{
+    $config['upload_path'] = './assets/photo/surat_masuk/';
+    $config['allowed_types'] = 'gif|jpg|png';
+    $config['file_name'] = $this->input->post('no_surat') . '_' . time();  // Tambahkan timestamp ke dalam nama file
+    $config['overwrite'] = true;
+    $config['max_size'] = 1024;
+
+    $this->load->library('upload', $config);
+
+    if ($this->upload->do_upload('image')) {
+        return $this->upload->data("file_name");
     }
+
+    return "no_image.jpg";
+}
+
 
     public function getById($id)
     {
