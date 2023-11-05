@@ -10,7 +10,7 @@ $autoload['libraries'] = array('database', 'session', 'form_validation');
 $autoload['drivers'] = array();
 
 
-$autoload['helper'] = array('url', 'pos');
+$autoload['helper'] = array('url', 'pos', 'file');
 
 
 $autoload['config'] = array();
@@ -19,4 +19,4 @@ $autoload['config'] = array();
 $autoload['language'] = array();
 
 
-$autoload['model'] = array();
+$autoload['model'] = array('Masuk_model');

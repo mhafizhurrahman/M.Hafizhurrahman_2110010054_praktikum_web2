@@ -1,5 +1,6 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
-class Surat_masuk extends CI_Controller
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+class Surat_ajuan extends CI_Controller
 {
     public function __construct()
     {
@@ -10,51 +11,56 @@ class Surat_masuk extends CI_Controller
     }
     public function index()
     {
+        $id = $this->session->userdata('id');
         $data = array(
-            'title' => 'View Data Surat',
-            'surat' => $this->Masuk_model->getAll(),
-            'content' => 'admin/surat_masuk/index'
+            'title' => 'View Data Surat Pengajuan',
+            'userlog' => infoLogin(),
+            'surat' => $this->db->where('is_active', 1)->where('id', $id)->get('tb_surat_masuk')->result(),
+            'content' => '/surat_ajuan/index'
         );
-        $this->load->view('admin/template/main', $data);
+        $this->load->view('template_user/main', $data);
     }
     public function add()
     {
         $data = array(
-            'title' => 'Tambah Data Surat Masuk',
-            'content' => 'admin/surat_masuk/add_form'
+            'title' => 'Tambah Data Surat Pengajuan',
+            'userlog' => infoLogin(),
+            'content' => 'surat_ajuan/add_form'
         );
-        $this->load->view('admin/template/main', $data);
+        $this->load->view('template_user/main', $data);
     }
+
+
     public function save()
     {
-        $this->Masuk_model->Save();
+        $this->Masuk_model->saveAjuan();
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata("success", "Data Surat Masuk Berhasil DiSimpan");
         }
-        redirect('admin/surat_masuk');
+        redirect('surat_ajuan');
     }
 
     public function getedit($id)
     {
         $data = array(
             'title' => 'Update Data Surat Masuk',
+            'userlog' => infoLogin(),
             'surat' => $this->Masuk_model->getById($id),
-            'content' => 'admin/surat_masuk/edit_form'
+            'content' => 'surat_ajuan/edit_form'
         );
-        $this->load->view('admin/template/main', $data);
+        $this->load->view('template_user/main', $data);
     }
-
     public function edit()
     {
         $this->Masuk_model->editData();
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata("success", "Data user Berhasil DiUpdate");
         }
-        redirect('admin/surat_masuk');
+        redirect('surat_ajuan');
     }
     function delete($id)
     {
         $this->Masuk_model->delete($id);
-        redirect('admin/surat_masuk');
+        redirect('surat_ajuan');
     }
 }
